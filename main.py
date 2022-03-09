@@ -15,7 +15,7 @@ def is_prime(n: int) -> bool:
     """
     if n == 2 or n == 3:
         return True
-    elif n % 2 == 0 or n % 3 == 0:
+    elif n == 1 or n % 2 == 0 or n % 3 == 0:
         return False
     
 
@@ -34,32 +34,48 @@ def is_prime(n: int) -> bool:
     
     return True
 
-def preorder_traversal(tree: list, i: int, sum_: int, max_: int):
-    sum_ += tree[i]
-    max_ = max(max_, sum_)
-
-    left_child = i*2
-    right_child = i*2 + 1
-
-    if left_child < len(tree):
-        max_ = preorder_traversal(tree, left_child, sum_, max_)
-    if right_child < len(tree):
-        max_ = preorder_traversal(tree, right_child, sum_, max_)
+def preorder_traversal(head: Node, sum_: int, max_: int):
+    # if the number is prime stop moving forward
+    if is_prime(head.value):
+        return max_
     
+    # Calculate the new sumn and the new maximum sum
+    sum_ += head.value
+    max_ = max(sum_, max_)
+
+    # calculate the maximum of the left and right branches
+    if head.left is not None:
+        max_ = preorder_traversal(head.left, sum_, max_)
+    if head.right is not None:
+        max_ = preorder_traversal(head.right, sum_, max_)
+    
+    # Return the maximum sum
     return max_
 
-def find_sum(tree: list) -> int:
-    return preorder_traversal(tree, 1, 0, 0)
+def find_sum(head: Node) -> int:
+    return preorder_traversal(head, 0, 0)
 
-# I will store the pyramid in a binary tree structure.
-# Since the binary tree given to me is a perfect binary tree, I wil store it as a list.
-tree = [-1]
+head = Node(0)
 
 # Read the pyramid and store it in the tree list
 with open('input.txt') as f:
+    # Read the head of the tree
+    head.value = int(f.readline().strip())
+
+    # Read the rest of the nodes
+    parent_nodes = [head]
     for line in f:
-        numbers = [int(x) for x in line.strip().split()]
-        tree.extend(numbers)
-print(tree)
-print(find_sum(tree))
+        nodes = [Node(int(x)) for x in line.strip().split()]
+
+        parent_nodes[0].left = nodes[0]
+        parent_nodes[0].right = nodes[1]
+
+        for i in range(1, len(parent_nodes)):
+            parent_nodes[i].left = nodes[i]
+            parent_nodes[i].right = nodes[i+1]
+        
+        parent_nodes = nodes
+
+
+print(find_sum(head))
 
