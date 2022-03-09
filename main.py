@@ -18,7 +18,6 @@ def is_prime(n: int) -> bool:
     elif n == 1 or n % 2 == 0 or n % 3 == 0:
         return False
     
-
     # All prime numbers except 2 and 3 are of form 6k+1 or 6k-1.
     # So I am only checking to see if n is divisible by prime numbers.
 
@@ -34,26 +33,20 @@ def is_prime(n: int) -> bool:
     
     return True
 
-def preorder_traversal(head: Node, sum_: int, max_: int):
+def find_sum(head: Node) -> int:
     # if the number is prime stop moving forward
     if is_prime(head.value):
-        return max_
-    
-    # Calculate the new sumn and the new maximum sum
-    sum_ += head.value
-    max_ = max(sum_, max_)
-
-    # calculate the maximum of the left and right branches
+        return 0
+        
+    left_sum, right_sum = 0, 0
+    # Calculate the maximum sum of the left and right branches
     if head.left is not None:
-        max_ = preorder_traversal(head.left, sum_, max_)
+        left_sum = find_sum(head.left)
     if head.right is not None:
-        max_ = preorder_traversal(head.right, sum_, max_)
+        right_sum = find_sum(head.right)
     
-    # Return the maximum sum
-    return max_
-
-def find_sum(head: Node) -> int:
-    return preorder_traversal(head, 0, 0)
+    # Return the maximum sum of this tree
+    return head.value + max(left_sum, right_sum)
 
 head = Node(0)
 
