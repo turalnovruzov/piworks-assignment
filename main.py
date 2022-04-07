@@ -40,26 +40,32 @@ def is_prime(n: int) -> bool:
     
     return True
 
-def find_sum(head: Node) -> int:
+def find_sum(head: Node) -> tuple[int, list[int]]:
     # if the number is prime stop moving forward
     if is_prime(head.value):
-        return 0
+        return 0, []
         
     left_sum, right_sum = 0, 0
-    # Calculate the maximum sum of the left and right branches
+    left_path, right_path = [], []
+    # Calculate the maximum sum and path of the left and right branches
     if head.left is not None:
-        left_sum = find_sum(head.left)
+        left_sum, left_path = find_sum(head.left)
     if head.right is not None:
-        right_sum = find_sum(head.right)
+        right_sum, right_path = find_sum(head.right)
     
-    # Return the maximum sum of this tree
-    return head.value + max(left_sum, right_sum)
+    # Return the maximum sum and the path of this tree
+    if left_sum > right_sum:
+        left_path.insert(0, head.value)
+        return (head.value + left_sum, left_path)
+    else:
+        right_path.insert(0, head.value)
+        return (head.value + right_sum, right_path)
 
 head = Node(0)
 filepath = sys.argv[1]
 
 # Read the pyramid and store it in the tree list
-with open(filename) as f:
+with open(filepath) as f:
     # Read the head of the tree
     head.value = int(f.readline().strip())
 

@@ -15,7 +15,7 @@ def generate(depth, max_value):
         line = ''
         # Print random numbers current depth times
         for _ in range(d):
-            line += f'{random.randint(1, max_value)} '
+            line += f'{random.randint(1, max_value)}\t'
         
         # Append the line to the result
         result += line + '\n'
