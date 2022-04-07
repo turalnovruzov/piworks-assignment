@@ -1,4 +1,9 @@
-# Author: Tural Novruzov
+"""
+Usage: python main.py input_filepath
+"""
+
+import sys
+
 
 class Node:
     def __init__(self, value) -> None:
@@ -51,9 +56,10 @@ def find_sum(head: Node) -> int:
     return head.value + max(left_sum, right_sum)
 
 head = Node(0)
+filepath = sys.argv[1]
 
 # Read the pyramid and store it in the tree list
-with open('input.txt') as f:
+with open(filename) as f:
     # Read the head of the tree
     head.value = int(f.readline().strip())
 

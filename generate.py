@@ -2,7 +2,7 @@
 This file is not used  to solve the given problem.
 It only generates random input configurations.
 
-Usage: python generate.py file_name depth max_value
+Usage: python generate.py file_path depth max_value
 """
 
 import sys
@@ -22,8 +22,8 @@ def generate(depth, max_value):
     
     return result
 
-filename, depth, max_value = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+filepath, depth, max_value = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 
-with open(filename, 'w') as f:
+with open(filepath, 'w') as f:
     content = generate(depth, max_value)
     f.write(content)
