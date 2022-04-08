@@ -53,8 +53,10 @@ def find_sum(head: Node) -> tuple[int, list[int]]:
     if head.right is not None:
         right_sum, right_path = find_sum(head.right)
     
+    left_len, right_len = len(left_path), len(right_path)
+
     # Return the maximum sum and the path of this tree
-    if left_sum > right_sum:
+    if (left_len > right_len) or (left_len == right_len and left_sum >= right_sum):
         left_path.insert(0, head.value)
         return (head.value + left_sum, left_path)
     else:
@@ -84,5 +86,5 @@ with open(filepath) as f:
         parent_nodes = nodes
 
 
-print(find_sum(head))
+print(find_sum(head)[0])
 
