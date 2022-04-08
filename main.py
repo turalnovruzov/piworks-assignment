@@ -85,6 +85,7 @@ with open(filepath) as f:
         
         parent_nodes = nodes
 
-
-print(find_sum(head)[0])
+max_sum, path = find_sum(head)
+print(f'Maximum sum: {max_sum}')
+print(f'Path: {", ".join(map(str, path))}')
 
