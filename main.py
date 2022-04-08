@@ -90,10 +90,7 @@ with open(filepath) as f:
     for line in f:
         nodes = [Node(int(x)) for x in line.strip().split()]
 
-        parent_nodes[0].left = nodes[0]
-        parent_nodes[0].right = nodes[1]
-
-        for i in range(1, len(parent_nodes)):
+        for i in range(0, len(parent_nodes)):
             parent_nodes[i].left = nodes[i]
             parent_nodes[i].right = nodes[i+1]
         
