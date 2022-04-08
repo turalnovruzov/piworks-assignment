@@ -20,4 +20,6 @@ python generate.py path_to/file.txt depth max_value
 
 ## Description
 
+The solution of the problem is in [main.py](main.py). The [generate.py](generate.py) is for generating random pyramids.
+
 The instruction of the assignment are given [here](instrcutions.md).
