@@ -10,6 +10,8 @@ class Node:
         self.value = value
         self.left = None
         self.right = None
+        self.max_sum = -1
+        self.path = []
 
 def is_prime(n: int) -> bool:
     """Checks if a number is a prime number or not.
@@ -41,6 +43,10 @@ def is_prime(n: int) -> bool:
     return True
 
 def find_sum(head: Node) -> tuple[int, list[int]]:
+    # If calculated before, return the values
+    if head.max_sum != -1:
+        return head.max_sum, head.path
+
     # if the number is prime stop moving forward
     if is_prime(head.value):
         return 0, []
@@ -58,10 +64,18 @@ def find_sum(head: Node) -> tuple[int, list[int]]:
     # Return the maximum sum and the path of this tree
     if (left_len > right_len) or (left_len == right_len and left_sum >= right_sum):
         left_path.insert(0, head.value)
-        return (head.value + left_sum, left_path)
+
+        head.max_sum = head.value + left_sum
+        head.path = list(left_path)
+
+        return (head.max_sum, left_path)
     else:
         right_path.insert(0, head.value)
-        return (head.value + right_sum, right_path)
+
+        head.max_sum = head.value + right_sum
+        head.path = list(right_path)
+        
+        return (head.max_sum, right_path)
 
 head = Node(0)
 filepath = sys.argv[1]
@@ -87,5 +101,6 @@ with open(filepath) as f:
 
 max_sum, path = find_sum(head)
 print(f'Maximum sum: {max_sum}')
+print(f'Path length: {len(path)}')
 print(f'Path: {", ".join(map(str, path))}')
 
